@@ -1,0 +1,121 @@
+<div class="parent">
+    <h1>Blood and Bone Character Sheet</h1><button class="export" (click)="export()">Export Character</button><br/><br/><br/>
+    <div class="header">
+        <div class="labelsDiv">
+            <span class="labels">Character Name : </span><br/><br/>
+            <span class="labels">Damage Taken : </span><br/><br/>
+            <span class="labels">Equipp Armor (Chest Only) : </span><br/><br/>
+            <span class="labels">Carry Weapon : </span><br/><br/>
+        </div>
+        <div class="valuesDiv">
+            <input type="text" class="inputField" [value]="user.character_name" (input)="user.character_name = $event.target.value"><br/><br/>
+            <button class="btnMinus" (click)="damageMinus()">-</button>  <input type="number" readonly class="inputField1 danger" [value]="user.damage" min="0"> <button class="btnPlus" (click)="damagePlus()">+</button><br/><br/> 
+            <select (change)="onChangeArmor($event)" class="inputField" name="armorChoice" id="armorChoice">
+                <option disabled>Select Option</option>
+                <option [value]="choice.value" [selected]="choice.value == selectedArmorChoice"  *ngFor="let choice of armorChoices;" >{{choice.name}}</option>
+            </select><br/><br/>
+            <select (change)="onChangeWeapon($event)" class="inputField" name="weaponChoice" id="weaponChoice">
+                <option disabled>Select Option</option>
+                <option [value]="choice.value" [selected]="choice.value == selectedWeaponChoice"  *ngFor="let choice of weaponChoices;" >{{choice.name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="attributesSelection">
+        <button (click)="attributesOnClick('basic')" class="attributesBtn" [ngClass]="{'selectedBtn' : basicAttrFlag, 'deSelectBtn': !basicAttrFlag}">Basic Attributes</button>
+        <button (click)="attributesOnClick('combat')" class="attributesBtn" [ngClass]="{'selectedBtn' : combatAttrFlag, 'deSelectBtn': !combatAttrFlag}">Combat Attributes</button>
+        <button (click)="attributesOnClick('skills')" class="attributesBtn" [ngClass]="{'selectedBtn' : skillsAttrFlag, 'deSelectBtn': !skillsAttrFlag}">Skills</button>
+        <button (click)="attributesOnClick('traits')" class="attributesBtn" [ngClass]="{'selectedBtn' : traitsFlag, 'deSelectBtn': !traitsFlag}">Traits</button>
+    </div>
+    <div class="skillsList" *ngIf="skillsListFlag">
+        <button (click)="subAttributesOnClick('strength')" class="skillsAttributesBtn" [ngClass]="{'selectedBtn' : skillStrengthFlag, 'deSelectBtn': !skillStrengthFlag}">Strength</button>
+        <button (click)="subAttributesOnClick('dexterity')" class="skillsAttributesBtn" [ngClass]="{'selectedBtn' : skillDexterityFlag, 'deSelectBtn': !skillDexterityFlag}">Dexterity</button>
+        <button (click)="subAttributesOnClick('mind')" class="skillsAttributesBtn" [ngClass]="{'selectedBtn' : skillMindFlag, 'deSelectBtn': !skillMindFlag}">Mind</button>
+        <button (click)="subAttributesOnClick('presence')" class="skillsAttributesBtn" [ngClass]="{'selectedBtn' : skillPresenceFlag, 'deSelectBtn': !skillPresenceFlag}">Presence</button>
+        <div class="attributesList" *ngIf="skillStrengthFlag">
+            <div class="labelsDiv">
+                <span class="labels">Fighting : </span><br/><br/>
+            </div>
+            <div class="valuesDiv">
+                <input type="number" readonly class="attributesVals" [value]="user.skills.strength.fighting.value" min="0" max="5">&nbsp;<span class="rank">{{getRank(user.skills.strength.fighting.value)}}</span>&nbsp;<button (click)="generateValue(user.skills.strength.fighting.value)">Generate Value</button><br/>
+            </div>
+        </div>
+        <div class="attributesList" *ngIf="skillDexterityFlag">
+            <div class="labelsDiv">
+                <span class="labels">Fighting : </span><br/><br/>
+                <span class="labels">Thievery : </span><br/><br/>
+                <span class="labels">Stealth : </span><br/><br/>
+                <span class="labels">Archery : </span><br/><br/>
+            </div>
+            <div class="valuesDiv">
+                <input type="number" readonly class="attributesVals" [value]="user.skills.dexterity.fighting.value" min="0" max="5">&nbsp;<span class="rank">{{getRank(user.skills.dexterity.fighting.value)}}</span>&nbsp;<button (click)="generateValue(user.skills.dexterity.fighting.value)">Generate Value</button><br/>
+                <input type="number" readonly class="attributesVals" [value]="user.skills.dexterity.thievery.value" min="0" max="5">&nbsp;<span class="rank">{{getRank(user.skills.dexterity.thievery.value)}}</span>&nbsp;<button (click)="generateValue(user.skills.dexterity.thievery.value)">Generate Value</button><br/>
+                <input type="number" readonly class="attributesVals" [value]="user.skills.dexterity.stealth.value" min="0" max="5">&nbsp;<span class="rank">{{getRank(user.skills.dexterity.stealth.value)}}</span>&nbsp;<button (click)="generateValue(user.skills.dexterity.stealth.value)">Generate Value</button><br/>
+                <input type="number" readonly class="attributesVals" [value]="user.skills.dexterity.archery.value" min="0" max="5">&nbsp;<span class="rank">{{getRank(user.skills.dexterity.archery.value)}}</span>&nbsp;<button (click)="generateValue(user.skills.dexterity.archery.value)">Generate Value</button><br/>
+            </div>
+        </div>
+        <div class="attributesList" *ngIf="skillMindFlag">
+            <div class="labelsDiv">
+                <span class="labels">Learned : </span><br/><br/>
+                <span class="labels">Survival : </span><br/><br/>
+                <span class="labels">Perception : </span><br/><br/>
+                <span class="labels">Apothecary : </span><br/><br/>
+                <span class="labels">Power : </span><br/><br/>
+            </div>
+            <div class="valuesDiv">
+                <input type="number" readonly class="attributesVals" [value]="user.skills.mind.learned.value" min="0" max="5">&nbsp;<span class="rank">{{getRank(user.skills.mind.learned.value)}}</span>&nbsp;<button (click)="generateValue(user.skills.mind.learned.value)">Generate Value</button><br/>
+                <input type="number" readonly class="attributesVals" [value]="user.skills.mind.survival.value" min="0" max="5">&nbsp;<span class="rank">{{getRank(user.skills.mind.survival.value)}}</span>&nbsp;<button (click)="generateValue(user.skills.mind.survival.value)">Generate Value</button><br/>
+                <input type="number" readonly class="attributesVals" [value]="user.skills.mind.perception.value" min="0" max="5">&nbsp;<span class="rank">{{getRank(user.skills.mind.perception.value)}}</span>&nbsp;<button (click)="generateValue(user.skills.mind.perception.value)">Generate Value</button><br/>
+                <input type="number" readonly class="attributesVals" [value]="user.skills.mind.apothecary.value" min="0" max="5">&nbsp;<span class="rank">{{getRank(user.skills.mind.apothecary.value)}}</span>&nbsp;<button (click)="generateValue(user.skills.mind.apothecary.value)">Generate Value</button><br/>
+                <input type="number" readonly class="attributesVals" [value]="user.skills.mind.power.value" min="0" max="5">&nbsp;<span class="rank">{{getRank(user.skills.mind.power.value)}}</span>&nbsp;<button (click)="generateValue(user.skills.mind.power.value)">Generate Value</button><br/>
+            </div>
+        </div>
+        <div class="attributesList" *ngIf="skillPresenceFlag">
+            <div class="labelsDiv">
+                <span class="labels">Intimidation : </span><br/><br/>
+                <span class="labels">Performance : </span><br/><br/>
+                <span class="labels">Manipulation : </span><br/><br/>
+                <span class="labels">Insight : </span><br/><br/>
+                <span class="labels">Power : </span><br/><br/>
+            </div>
+            <div class="valuesDiv">
+                <input type="number" readonly class="attributesVals" [value]="user.skills.presence.intimidation.value" min="0" max="5">&nbsp;<span class="rank">{{getRank(user.skills.presence.intimidation.value)}}</span>&nbsp;<button (click)="generateValue(user.skills.presence.intimidation.value)">Generate Value</button><br/>
+                <input type="number" readonly class="attributesVals" [value]="user.skills.presence.performance.value" min="0" max="5">&nbsp;<span class="rank">{{getRank(user.skills.presence.performance.value)}}</span>&nbsp;<button (click)="generateValue(user.skills.presence.performance.value)">Generate Value</button><br/>
+                <input type="number" readonly class="attributesVals" [value]="user.skills.presence.manipulation.value" min="0" max="5">&nbsp;<span class="rank">{{getRank(user.skills.presence.manipulation.value)}}</span>&nbsp;<button (click)="generateValue(user.skills.presence.manipulation.value)">Generate Value</button><br/>
+                <input type="number" readonly class="attributesVals" [value]="user.skills.presence.insight.value" min="0" max="5">&nbsp;<span class="rank">{{getRank(user.skills.presence.insight.value)}}</span>&nbsp;<button (click)="generateValue(user.skills.presence.insight.value)">Generate Value</button><br/>
+                <input type="number" readonly class="attributesVals" [value]="user.skills.presence.power.value" min="0" max="5">&nbsp;<span class="rank">{{getRank(user.skills.presence.power.value)}}</span>&nbsp;<button (click)="generateValue(user.skills.presence.power.value)">Generate Value</button><br/>
+            </div>
+        </div>
+    </div>
+    <div class="attributesList" *ngIf="basicAttrFlag">
+        <div class="labelsDiv">
+            <span class="labels">Strength : </span><br/><br/>
+            <span class="labels">Dexterity : </span><br/><br/>
+            <span class="labels">Mind : </span><br/><br/>
+            <span class="labels">Presence : </span><br/><br/>
+        </div>
+        <div class="valuesDiv">
+            <button class="btnMinus" (click)="strengthMinus()">-</button>  <input type="number" readonly class="attributesVals success" [value]="user.base_attributes.strength" min="0" max="5" > <button class="btnPlus" (click)="strengthPlus()">+</button><br/>
+            <button class="btnMinus" (click)="dexterityMinus()">-</button>  <input type="number" readonly class="attributesVals" [value]="user.base_attributes.dexterity" min="0" max="5" > <button class="btnPlus" (click)="dexterityPlus()">+</button><br/>
+            <button class="btnMinus" (click)="mindMinus()">-</button>  <input type="number" readonly class="attributesVals" [value]="user.base_attributes.mind" min="0" max="5" > <button class="btnPlus" (click)="mindPlus()">+</button><br/>
+            <button class="btnMinus" (click)="presenceMinus()">-</button>  <input type="number" readonly class="attributesVals" [value]="user.base_attributes.presence" min="0" max="5" > <button class="btnPlus" (click)="presencePlus()">+</button><br/>
+        </div>
+    </div>
+    <div class="attributesList" *ngIf="combatAttrFlag">
+        <div class="labelsDiv">
+            <span class="labels">Vitality : </span><br/><br/>
+            <span class="labels">Evasion : </span><br/><br/>
+            <span class="labels">Armor : </span><br/><br/>
+            <span class="labels">Alacrity : </span><br/><br/>
+            <span class="labels">Tenacity : </span><br/><br/>
+            <span class="labels">Power : </span><br/><br/>
+        </div>
+        <div class="valuesDiv">
+            <input type="number" readonly class="attributesVals" [value]="user.combat_attributes.vitality" min="0" max="8"><br/>
+            <input type="number" readonly class="attributesVals" [value]="user.combat_attributes.evasion" min="0" max="15"><br/>
+            <input type="number" readonly class="attributesVals" [value]="user.combat_attributes.armor" min="0" max="5"><br/>
+            <input type="number" readonly class="attributesVals" [value]="user.combat_attributes.alacrity" min="0" max="12"><br/>
+            <button class="btnMinus" (click)="tenacityMinus()"> - Use</button>  <input type="number" readonly class="attributesValsWithBTns" [value]="user.combat_attributes.tenacity" min="0" max="6"><button class="btnPlus" (click)="tenacityPlus()"> + Recieve</button><br/>
+            <input type="number" readonly class="attributesVals" [value]="user.combat_attributes.power" min="0" max="6"><br/>
+        </div>
+    </div>
+</div>

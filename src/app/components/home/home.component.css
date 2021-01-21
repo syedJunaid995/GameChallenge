@@ -1,0 +1,156 @@
+.parent{
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    margin: 0 !important;
+    align-items: center;
+    text-align: center;
+    padding-top: 1%;
+}
+
+.title{
+    display: inline;
+    margin-right: 5%;
+}
+
+.export{
+    padding: 0.5%;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: green;
+    color: white;
+    width: 10%;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.labelsDiv{
+    flex: 50%;
+    text-align: right;
+    align-items: right;
+}
+
+.valuesDiv{
+    flex: 50%;
+    align-items: left;
+    text-align: left;
+    padding-left: 3%;
+}
+
+.header{
+    display: flex;
+}
+
+.labels{
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 3%;
+}
+
+.inputField{
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    width: 30%;
+}
+
+.inputField1{
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    width: 22%;
+}
+
+.btnMinus{
+    margin-right: 1%;
+}
+
+.btnPlus{
+    margin-left: 1%;
+}
+
+.attributesSelection{
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.attributesBtn{
+    padding: 0.5%;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    margin-left: 1%;
+    margin-right: 1%;
+    width: 10%;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.skillsList{
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    margin-top: 1.5%;
+}
+
+.skillsAttributesBtn{
+    padding: 0.4%;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+    width: 8%;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.attributesVals{
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    width: 22%;
+    margin-bottom: 2.3%;
+}
+
+.attributesValsWithBTns{
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    width: 14%;
+    margin-bottom: 2.3%;
+}
+
+.attributesList{
+    margin-top: 2%;
+    display: flex;
+}
+
+.rank{
+    margin-left: 1%;
+    margin-right: 1%;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.danger{
+    color: red;
+}
+
+.success{
+    color : green
+}
+
+.selectedBtn{
+    background-color: black;
+    color: white;
+}
+
+.deSelectBtn{
+    background-color: white;
+    color: black;
+}
